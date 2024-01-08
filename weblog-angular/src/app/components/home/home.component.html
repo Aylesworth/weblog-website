@@ -1,0 +1,60 @@
+
+
+    <!-- Page Heading -->
+    <h1 class="my-4">Welcome to Your Blog</h1>
+
+    <!-- "Create New Post" button -->
+    <button class="btn btn-primary btn-dark new-post-btn" routerLink="/new-post">Create New Post</button>
+
+    <h2 class="mb-4">Latest Posts</h2>
+
+    <!-- Blog Posts -->
+    <div *ngFor="let post of posts" class="row">
+
+        <div class="col-lg-12 col-sm-12 mb-4">
+            <div class="card h-100">
+              <img class="card-img-top" src="http://placehold.it/978x180" alt="">
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">{{ post.title }}</a>
+                </h4>
+                <p class="card-text">{{ post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content }}</p>
+                <div class="clearfix">
+                    <a href="#" class="btn btn-primary btn-sm btn-dark mb-4">Read More</a>
+                  </div>
+                <div class="card-footer text-muted mt-0 mb-0">
+                    <small>{{ post.created | date }} by <em>{{ post.author }}</em></small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      <!-- Add more blog posts here -->
+
+    <!-- </div> -->
+
+    <!-- <div class="row">
+        <div class="col-lg-12 col-sm-12 mb-4">
+            <div class="card h-100">
+              <img class="card-img-top" src="http://placehold.it/978x180" alt="">
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Post Title</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                <div class="clearfix">
+                    <a href="#" class="btn btn-primary btn-sm btn-dark mb-4">Read More</a>
+                  </div>
+                <div class="card-footer text-muted mt-0 mb-0">
+                    <small>By <i>John Doe</i> on January 5, 2024</small>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+      <!-- Add more blog posts here -->
+
+    </div>
+    <!-- /.row -->
+
+  

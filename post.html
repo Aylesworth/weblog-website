@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Your Blog - Post Details</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+  <!-- Custom styles -->
+  <style>
+    body {
+      padding-top: 56px;
+      margin-bottom: 60px;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #f8f9fa;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .navbar .navbar-nav .nav-item .login-btn {
+      color: #fff;
+      background-color: #343a40;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .navbar .navbar-nav .nav-item .login-btn:hover,
+    .navbar .navbar-nav .nav-item .login-btn:focus {
+      color: #343a40;
+      background-color: #fff;
+      border-color: #fff;
+    }
+
+    .new-post-btn {
+      background-color: #343a40;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .new-post-btn:hover,
+    .new-post-btn:focus {
+      background-color: #fff;
+      color: #343a40;
+    }
+
+    /* Custom styles for comments */
+    .comment-section {
+      margin-top: 30px;
+    }
+
+    .comment {
+      margin-bottom: 20px;
+      border: 0;
+    }
+
+    .comment-body {
+      /* border: 1px solid #ddd; */
+      /* padding: 15px; */
+      border-radius: 5px;
+      background-color: #fff;
+    }
+
+    .comment-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+
+    .comment-content {
+      display: block;
+    }
+
+    .comment-text {
+      flex: 1;
+    }
+
+    .comment-actions {
+      margin-top: 10px;
+      display: block;
+    }
+
+    .comment-actions > button {
+      margin-right: 10px;
+      color: #343a40;
+      cursor: pointer;
+      border: 0;
+    }
+
+    .comment-actions > button:hover {
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Your Blog</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <span class="nav-link user-info mr-4">Welcome, JohnDoe!</span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link login-btn" href="#">Login</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Page Heading -->
+    <!-- <h1 class="my-4">Post Title</h1> -->
+
+    <!-- Blog Post -->
+    <div class="card mb-4">
+      <img class="card-img-top" src="http://placehold.it/978x180" alt="Post Image">
+      <div class="card-body">
+        <h2 class="card-title">Post Title</h2>
+        <p class="card-text text-muted"><small>By <i>John Doe</i> on January 5, 2024.</small></p>
+        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+      </div>
+    </div>
+
+    <!-- Comment Section -->
+    <div class="card px-4 py-3">
+        <h4 class="mb-4">Comment Section</h4>
+
+    <!-- Add Comment Form -->
+      <div class="comment">
+        <div class="media comment-body">
+          <img class="d-flex mr-3 user-avatar" src="http://placehold.it/50x50" alt="User Avatar">
+          <div class="media-body comment-content">
+            <div class="comment-text">
+                <form>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="3" placeholder="Write a comment"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Comment</button>
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comment 1 -->
+      <div class="comment">
+        <div class="media comment-body">
+          <img class="d-flex mr-3 user-avatar" src="http://placehold.it/50x50" alt="User Avatar">
+          <div class="media-body comment-content">
+            <div class="comment-text">
+              <p>Comment content goes here.</p>
+            </div>
+            <div class="comment-actions">
+              <button class="btn-like" onclick="toggleLike(this.parentNode)">
+                <i class="fas fa-thumbs-up"></i> Like
+              </button>
+              <button class="btn-reply" onclick="toggleReplyForm(this.parentNode)">
+                <i class="fas fa-reply"></i> Reply
+              </button>
+              <small>Jan 6, 2024 at 10:04 AM</small>
+              <!-- Reply Form (Initially hidden) -->
+              <!-- <form class="reply-form d-none mt-3">
+                <div class="form-group mb-2">
+                  <textarea class="form-control" rows="2" placeholder="Write a reply"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Submit Reply</button>
+              </form> -->
+              <div class="reply-form d-none mt-3">
+                <div class="media comment-body">
+                  <img class="d-flex mr-3 user-avatar" src="http://placehold.it/50x50" alt="User Avatar">
+                  <div class="media-body comment-content">
+                    <div class="comment-text">
+                      <p>Comment content goes here.</p>
+                    </div>
+                    <div class="comment-actions">
+                      <button class="btn-like" onclick="toggleLike(this.parentNode)">
+                        <i class="fas fa-thumbs-up"></i> Like
+                      </button>
+                      <small>Jan 6, 2024 at 10:04 AM</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="reply-form d-none mt-3">
+                <div class="media comment-body">
+                  <img class="d-flex mr-3 user-avatar" src="http://placehold.it/50x50" alt="User Avatar">
+                  <div class="media-body comment-content">
+                    <div class="comment-text">
+                      <p>Comment content goes here.</p>
+                    </div>
+                    <div class="comment-actions">
+                      <button class="btn-like" onclick="toggleLike(this.parentNode)">
+                        <i class="fas fa-thumbs-up"></i> Like
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="reply-form d-none mt-3">
+                <div class="media comment-body pl-0">
+                  <img class="d-flex mr-3 user-avatar" src="http://placehold.it/50x50" alt="User Avatar">
+                  <div class="media-body comment-content">
+                    <div class="comment-text">
+                        <form>
+                            <div class="form-group">
+                              <textarea class="form-control" rows="3" placeholder="Write a comment"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Comment</button>
+                          </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add more comments as needed -->
+      
+
+    </div>
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Your Blog. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+
+  <!-- Custom scripts -->
+  <script>
+    // Toggle like button
+    function toggleLike(commentActions) {
+      const icon = commentActions.querySelector('i');
+      icon.classList.toggle('fas'); // Toggle filled thumbs-up icon
+      // Your logic for toggling like
+      console.log('Like button clicked');
+    }
+
+    // Toggle reply form
+    function toggleReplyForm(commentActions) {
+      const replyForms = commentActions.querySelectorAll(".reply-form"); 
+      console.log(commentActions);
+      console.log(replyForms);
+      for (let replyForm of replyForms) {
+        replyForm.classList.toggle('d-none');
+      }
+    }
+  </script>
+
+</body>
+</html>
