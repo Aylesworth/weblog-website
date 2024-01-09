@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-body {
-    padding-top: 32px; /* Adjust based on your navbar height */
-    margin-bottom: 60px; /* Height of the footer */
+app-root body {
+    padding-top: 60px; /* Adjust based on your navbar height */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   /* Add your additional styles here */
@@ -12,14 +14,19 @@ body {
   }
   */
 
+  .container {
+    flex: 1;
+  }
+
   /* Sticky footer styles */
   .footer {
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
     background-color: #f8f9fa; /* Bootstrap default background color */
     text-align: center;
     padding: 15px;
+    z-index: 9999;
   }
 
   /* Custom style for the login button */
@@ -59,3 +66,10 @@ body {
       background-color: #fff; /* Change background color on hover */
       color: #343a40; /* Change text color on hover to match background color */
   }
+
+  .img-wrapper {
+    width: 978px;
+    height: 300px;
+    overflow: hidden;
+  }
+

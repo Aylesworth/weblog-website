@@ -14,6 +14,10 @@ export class PostService {
 
   constructor(private httpClient: HttpClient) { }
 
+  createPost(post: Post): Observable<any> {
+    return this.httpClient.post<Post>(this.postUrl, post);
+  }
+
   getPosts(): Observable<Post[]> {
     return this.httpClient.get<Post[]>(this.postUrl).pipe(
       map((response: any) => {
@@ -27,7 +31,7 @@ export class PostService {
     );
   }
 
-  createPost(post: Post): Observable<any> {
-    return this.httpClient.post<Post>(this.postUrl, post);
+  getPost(id: string): Observable<Post> {
+    return this.httpClient.get<Post>(`${this.postUrl}/${id}`);
   }
 }

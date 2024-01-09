@@ -6,7 +6,7 @@ import { NewPostComponent } from './components/new-post/new-post.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'post', component: PostComponent },
+  { path: 'post/:id', component: PostComponent },
   { path: 'new-post', component: NewPostComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },

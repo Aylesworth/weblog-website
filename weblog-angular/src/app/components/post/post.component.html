@@ -1,1 +1,10 @@
-<p>post works!</p>
+<!-- Blog Post -->
+<div class="card mb-4 mb-5">
+    <div class="img-wrapper" *ngIf="post.thumbnail" [innerHTML]="post.thumbnail"></div>
+    <!-- <img class="card-img-top" src="http://placehold.it/978x180" alt="Post Image"> -->
+    <div class="card-body">
+        <h2 class="card-title">{{ post.title }}</h2>
+        <p class="card-text text-muted"><small>{{ post.created | date:'medium' }} by <a href="#"><em>{{ post.author }}</em></a></small></p>
+        <p class="card-text" [innerHTML]="post.content"></p>
+    </div>
+</div>

@@ -26,9 +26,9 @@ public class PostDto {
     @NotEmpty
     private String author;
 
+    private String thumbnail;
+
     private Date created;
 
     private Date updated;
-
-    private List<CommentDto> comments;
 }

@@ -9,13 +9,15 @@ import { NewPostComponent } from './components/new-post/new-post.component';
 import { PostComponent } from './components/post/post.component';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NewPostComponent,
-    PostComponent
+    PostComponent,
+    CommentSectionComponent
   ],
   imports: [
     BrowserModule,
