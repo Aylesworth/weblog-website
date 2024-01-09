@@ -3,32 +3,14 @@
 <!-- Post Form -->
 <form>
     <div class="form-group">
-    <label for="postTitle">Post Title</label>
-    <input type="text" class="form-control" id="postTitle" placeholder="Enter post title">
+        <label for="postTitle">Post Title</label>
+        <input name="title" type="text" class="form-control" id="postTitle" placeholder="Enter post title" [(ngModel)]="inputs.title" required>
     </div>
     <div class="form-group">
-    <label for="editor-container">Post Content</label>
-    <div id="editor-container">
-        <quill-editor
-            [modules]="{
-                toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote', 'code-block'],
-                [{ list: 'ordered' }, { list: 'bullet' }],
-                [{ script: 'sub' }, { script: 'super' }],
-                [{ indent: '-1' }, { indent: '+1' }],
-                [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                [{ color: [] }, { background: [] }],
-                [{ font: [] }],
-                [{ align: [] }],
-                ['clean'],
-                ],
-            }"
-            [(ngModel)]="value"
-            [placeholder]="placeholder"
-            (onContentChanged)="onContentChanged($event)"
-        ></quill-editor>
+        <label for="editor-container">Post Content</label>
+        <div id="editor-container">
+            <ckeditor name="content" [editor]="Editor" [(ngModel)]="inputs.content"></ckeditor>
+        </div>
     </div>
-    </div>
-    <button type="submit" class="btn btn-primary btn-dark">Publish Post</button>
+    <button type="submit" class="btn btn-primary btn-dark mb-5" (click)="submit()">Publish Post</button>
 </form>

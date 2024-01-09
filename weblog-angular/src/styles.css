@@ -1,60 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
 body {
-    padding-top: 56px; /* Adjust based on your navbar height */
+    padding-top: 32px; /* Adjust based on your navbar height */
     margin-bottom: 60px; /* Height of the footer */
-}
+  }
 
-/* Add your additional styles here */
+  /* Add your additional styles here */
 
-/* Example: 
-.blog-post {
-margin-bottom: 30px;
-}
-*/
+  /* Example: 
+  .blog-post {
+    margin-bottom: 30px;
+  }
+  */
 
-/* Sticky footer styles */
-.footer {
+  /* Sticky footer styles */
+  .footer {
     position: fixed;
     bottom: 0;
     width: 100%;
     background-color: #f8f9fa; /* Bootstrap default background color */
     text-align: center;
     padding: 15px;
-}
+  }
 
-/* Custom style for the login button */
-.navbar .navbar-nav .nav-item .login-btn {
-    color: #fff; /* Text color */
-    background-color: #343a40; /* Dark background color */
-    border: 1px solid #fff; /* Border style */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
-}
+  /* Custom style for the login button */
+  .navbar .navbar-nav .nav-item .login-btn {
+      color: #fff; /* Text color */
+      background-color: #343a40; /* Dark background color */
+      border: 1px solid #fff; /* Border style */
+      border-radius: 5px; /* Rounded corners */
+      transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  }
 
-/* Hover effect for the login button */
-.navbar .navbar-nav .nav-item .login-btn:hover,
-.navbar .navbar-nav .nav-item .login-btn:focus {
-    color: #343a40; /* Change text color on hover to match background color */
-    background-color: #fff; /* Change background color on hover */
-    border-color: #fff; /* Change border color on hover */
-}
+  /* Hover effect for the login button */
+  .navbar .navbar-nav .nav-item .login-btn:hover,
+  .navbar .navbar-nav .nav-item .login-btn:focus {
+      color: #343a40; /* Change text color on hover to match background color */
+      background-color: #fff; /* Change background color on hover */
+      border-color: #fff; /* Change border color on hover */
+  }
 
-/* Additional style for user info */
-.navbar .navbar-nav .nav-item .user-info {
-    color: #fff; /* Text color */
-}
+  /* Additional style for user info */
+  .navbar .navbar-nav .nav-item .user-info {
+      color: #fff; /* Text color */
+  }
 
-/* Style for the "Create New Post" button */
-.new-post-btn {
-    background-color: #343a40; /* Dark background color */
-    border: 1px solid #fff; /* Border style */
-    border-radius: 5px; /* Rounded corners */
-    color: #fff; /* Text color */
-    margin-bottom: 20px; /* Adjust spacing */
-}
+  /* Style for the "Create New Post" button */
+  .new-post-btn {
+      background-color: #343a40; /* Dark background color */
+      border: 1px solid #fff; /* Border style */
+      border-radius: 5px; /* Rounded corners */
+      color: #fff; /* Text color */
+      margin-bottom: 20px; /* Adjust spacing */
+  }
 
-/* Hover effect for the "Create New Post" button */
-.new-post-btn:hover,
-.new-post-btn:focus {
-    background-color: #fff; /* Change background color on hover */
-    color: #343a40; /* Change text color on hover to match background color */
-}
+  /* Hover effect for the "Create New Post" button */
+  .new-post-btn:hover,
+  .new-post-btn:focus {
+      background-color: #fff; /* Change background color on hover */
+      color: #343a40; /* Change text color on hover to match background color */
+  }

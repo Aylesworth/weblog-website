@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PostDto {
-    private Long id;
+    private String id;
 
     @NotEmpty
     private String title;
@@ -25,7 +26,9 @@ public class PostDto {
     @NotEmpty
     private String author;
 
-    private LocalDateTime created;
+    private Date created;
 
-    private LocalDateTime updated;
+    private Date updated;
+
+    private List<CommentDto> comments;
 }

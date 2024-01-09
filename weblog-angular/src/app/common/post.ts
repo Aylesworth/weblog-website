@@ -5,7 +5,6 @@ export class Post {
         public content: string,
         public author: string,
         public created: string,
-        public updated: string,
-        public comments: Comment[]
+        public updated: string
     ) {}
 }

@@ -8,13 +8,12 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  appName: string = 'WeBlog';
   posts: Post[] = [];
 
   constructor(private postService: PostService) {
     postService.getPosts().subscribe(
-      data => {
-        this.posts = data;
-      }
+      (data: any) => this.posts = data
     );
   }
 }

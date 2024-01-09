@@ -1,33 +1,38 @@
-import { Component, Input } from '@angular/core';
-
+import { Component } from '@angular/core';
+import Editor from 'ckeditor5/build/ckeditor';
+import { Post } from 'src/app/common/post';
+import { PostService } from 'src/app/services/post.service';
+    
 @Component({
   selector: 'app-new-post',
   templateUrl: './new-post.component.html',
   styleUrls: ['./new-post.component.css']
 })
 export class NewPostComponent {
-  @Input() placeholder = '';
+  public Editor = Editor;
 
-  value: string = '';
-
-  onChange: any = () => {};
-  onTouch: any = () => {};
-
-  writeValue(obj: any): void {
-    this.value = obj;
+  inputs = {
+    title: '',
+    content: '',
   }
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
+  constructor(private postService: PostService) {
   }
+  
+  submit() {
+    console.log(this.inputs.title);
+    console.log(this.inputs.content);
+    const post: Post = {
+      id: 0,
+      title: this.inputs.title,
+      content: this.inputs.content,
+      author: 'example@gmail.com',
+      created: '',
+      updated: ''
+    };
 
-  registerOnTouched(fn: any): void {
-    this.onTouch = fn;
-  }
-
-  onContentChanged({ html, text }: { html: string; text: string }): void {
-    this.value = html;
-    this.onChange(html);
-    this.onTouch();
+    this.postService.createPost(post).subscribe(
+      data => console.log(data)
+    );
   }
 }

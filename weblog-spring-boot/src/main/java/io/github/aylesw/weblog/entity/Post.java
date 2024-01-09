@@ -1,26 +1,24 @@
 package io.github.aylesw.weblog.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "post")
+@Document(collection = "posts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String title;
 
@@ -28,12 +26,14 @@ public class Post {
 
     private String author;
 
-    @CreationTimestamp
-    private LocalDateTime created;
+    private Date created;
 
-    @UpdateTimestamp
-    private LocalDateTime updated;
+    private Date updated;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        if (comments == null) comments = new ArrayList<>();
+        return comments;
+    }
 }
