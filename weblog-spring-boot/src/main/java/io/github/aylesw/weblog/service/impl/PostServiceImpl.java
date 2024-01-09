@@ -35,28 +35,9 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> getPosts() {
         List<Post> posts = postRepository.findAllByOrderByCreatedDesc();
         return posts.stream().map(post -> {
-            PostDto postDto = PostDto.builder()
-                    .id(post.getId())
-                    .title(post.getTitle())
-                    .author(post.getAuthor())
-                    .created(post.getCreated())
-                    .build();
-
-            Document doc = Jsoup.parse(post.getContent());
-            String contentShort = doc.text();
-            if (contentShort.length() > 100)
-                contentShort = contentShort.substring(0, 100) + "...";
-            postDto.setContent(contentShort);
-
-            Element firstImage = doc.selectFirst("img");
-            if (firstImage != null) {
-                firstImage.attr("width", "100%")
-                        .attr("height", "auto")
-                        .attr("style", "object-fit: cover;");
-                postDto.setThumbnail(firstImage.outerHtml());
-            } else {
-                postDto.setThumbnail("<img class=\"card-img-top\" src=\"http://placehold.it/978x300\" alt=\"\">");
-            }
+            PostDto postDto = mapToDto(post);
+            postDto.setContent(getContentShort(post.getContent()));
+            postDto.setThumbnail(getThumbnail(post.getContent()));
             return postDto;
         }).toList();
     }
@@ -65,11 +46,32 @@ public class PostServiceImpl implements PostService {
     public PostDto getPost(String id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
-
-        return mapToDto(post);
+        PostDto postDto = mapToDto(post);
+        postDto.setThumbnail(getThumbnail(post.getContent()));
+        return postDto;
     }
 
     private PostDto mapToDto(Post post) {
         return mapper.map(post, PostDto.class);
+    }
+
+    private String getContentShort(String content) {
+        Document doc = Jsoup.parse(content);
+        String contentShort = doc.text();
+        if (contentShort.length() > 100)
+            contentShort = contentShort.substring(0, 100) + "...";
+        return contentShort;
+    }
+
+    private String getThumbnail(String content) {
+        Document doc = Jsoup.parse(content);
+        Element firstImage = doc.selectFirst("img");
+        if (firstImage != null) {
+            firstImage.attr("width", "100%")
+                    .attr("height", "auto")
+                    .attr("style", "object-fit: cover;");
+            return firstImage.outerHtml();
+        }
+        return null;
     }
 }

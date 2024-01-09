@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Post } from 'src/app/common/post';
+import appConfig from 'src/app/config/app-config';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  appName: string = 'WeBlog';
+  appName: string = appConfig.appName;
   posts: Post[] = [];
 
   constructor(private postService: PostService) {

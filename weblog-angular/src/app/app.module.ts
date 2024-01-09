@@ -10,6 +10,9 @@ import { PostComponent } from './components/post/post.component';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { CallbackComponent } from './components/callback/callback.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,9 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
     HomeComponent,
     NewPostComponent,
     PostComponent,
-    CommentSectionComponent
+    CommentSectionComponent,
+    NavBarComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +31,7 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
     FormsModule,
     CKEditorModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

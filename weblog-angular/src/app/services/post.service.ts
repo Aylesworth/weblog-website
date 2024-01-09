@@ -15,7 +15,7 @@ export class PostService {
   constructor(private httpClient: HttpClient) { }
 
   createPost(post: Post): Observable<any> {
-    return this.httpClient.post<Post>(this.postUrl, post);
+    return this.httpClient.post<any>(this.postUrl, post);
   }
 
   getPosts(): Observable<Post[]> {

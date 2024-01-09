@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import appConfig from './config/app-config';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  appName: string = 'WeBlog';
+  appName: string = appConfig.appName;
 }
