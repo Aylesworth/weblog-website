@@ -44,4 +44,21 @@ export class CommentService {
       email: email
     });
   }
+
+  replyComment(commentId: string, reply: Comment): Observable<any> {
+    const url: string = `${this.commentUrl}/${commentId}/replies`;
+    return this.httpClient.post<any>(url, reply);
+  }
+
+  getReplies(commentId: string, email: string): Observable<Comment[]> {
+    const url: string = `${this.commentUrl}/${commentId}/replies?email=${email}`;
+    return this.httpClient.get<Comment[]>(url).pipe(
+      map((response: any) => {
+        for (let element of response) {
+          element.posted = new Date(element.posted);
+        }
+        return response;
+      })
+    );
+  }
 }

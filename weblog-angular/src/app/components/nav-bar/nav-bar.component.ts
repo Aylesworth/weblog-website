@@ -11,9 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavBarComponent implements OnInit {
   appName: string = appConfig.appName;
-  authUrl: string = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${appConfig.clientId}&redirect_uri=${appConfig.redirectUri}&scope=profile%20email%20openid&approval_prompt=force`;
+  authUrl: string = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${appConfig.clientId}&redirect_uri=${appConfig.redirectUri}&scope=${appConfig.scopes.join('%20')}&approval_prompt=force`;
   loggedIn: boolean = false;
-  email: string = '';
+  name: string = '';
 
   constructor(
     private authService: AuthService,
@@ -23,12 +23,14 @@ export class NavBarComponent implements OnInit {
     this.authService.loggedIn.subscribe(
       value => {
         this.loggedIn = value;
-        if (value) 
-          this.email = this.authService.getEmail();
+        if (value) {
+          const email = this.authService.getEmail();
+          this.authService.getUserByEmail(email).subscribe(
+            data => this.name = data.name!
+          );
+        }
       }
     );
-
-    this.email = this.authService.getEmail();
   }
 
   logout() {

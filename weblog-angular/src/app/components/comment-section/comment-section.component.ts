@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Comment } from 'src/app/common/comment';
+import { User } from 'src/app/common/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommentService } from 'src/app/services/comment.service';
 
@@ -11,17 +12,21 @@ import { CommentService } from 'src/app/services/comment.service';
 })
 export class CommentSectionComponent implements OnInit {
   @Input() postId!: string;
-  @ViewChild('commentForm') commentForm!: NgForm;
 
   comments: Comment[] = [];
-  liked: boolean[] = [];
   repliesHidden: boolean[] = [];
   email: string = '';
+  self?: User;
 
   constructor(private commentService: CommentService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.email = this.authService.getEmail();
+    if (this.email !== '') {
+      this.authService.getUserByEmail(this.email).subscribe(
+        data => this.self = data
+      );
+    }
     this.fetchComments();
   }
 
@@ -30,16 +35,25 @@ export class CommentSectionComponent implements OnInit {
       data => {
         console.log(data);
         this.comments = data;
-        this.liked = this.comments.map(comment => comment.liked!);
         this.repliesHidden = new Array(this.comments.length).fill(true);
       }
     );
   }
 
-  submitComment() {
+  fetchReplies(comment: Comment) {
+    this.commentService.getReplies(comment.id!, this.email).subscribe(
+      data => {
+        console.log(data);
+        comment.replies = data;
+        comment.totalReplies = data.length;
+      }
+    );
+  }
+
+  submitComment(commentForm: NgForm) {
     const comment: Comment = {
       email: this.email,
-      content: this.commentForm.controls['comment']!.value
+      content: commentForm.controls['comment'].value.trim()
     }
 
     console.log(comment);
@@ -50,18 +64,23 @@ export class CommentSectionComponent implements OnInit {
         this.fetchComments();
       }
     );
-    this.commentForm.controls['comment']!.setValue('');
+    commentForm.controls['comment'].setValue('');
   }
 
   toggleReplies(index: number) {
     this.repliesHidden[index] = !this.repliesHidden[index];
+    const comment = this.comments[index];
+    if (this.repliesHidden[index]) {
+      comment.replies = [];
+    } else {
+      this.fetchReplies(comment);
+    }
   }
 
-  toggleLike(index: number) {
-    this.liked[index] = !this.liked[index];
-    const comment = this.comments[index];
+  toggleLike(comment: Comment) {
+    comment.liked = !comment.liked;
 
-    if (this.liked[index]) {
+    if (comment.liked) {
       this.commentService.likeComment(comment.id!, this.email).subscribe(
         newLikes => comment.likes = newLikes
       );
@@ -72,6 +91,18 @@ export class CommentSectionComponent implements OnInit {
     }
   }
 
-  like(comment: Comment) {
+  submitReply(comment: Comment, replyForm: NgForm) {
+    const reply: Comment = {
+      email: this.email,
+      content: replyForm.controls['reply'].value.trim()
+    }
+
+    this.commentService.replyComment(comment.id!, reply).subscribe(
+      response => {
+        console.log(response);
+        this.fetchReplies(comment);
+      }
+    )
+    replyForm.controls['reply'].setValue('');
   }
 }

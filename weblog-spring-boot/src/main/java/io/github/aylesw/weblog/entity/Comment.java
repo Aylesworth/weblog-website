@@ -23,6 +23,9 @@ public class Comment {
 
     private String email;
 
+    @DBRef
+    private User user;
+
     private String content;
 
     private Date posted;

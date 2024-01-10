@@ -36,4 +36,16 @@ public class CommentController {
     public ResponseEntity<Integer> unlikeComment(@PathVariable String id, @RequestBody Map<String, Object> body) {
         return ResponseEntity.ok(commentService.unlikeComment(id, (String) body.get("email")));
     }
+
+    @PostMapping("/comments/{id}/replies")
+    public ResponseEntity<CommentDto> replyComment(@PathVariable String id, @RequestBody CommentDto replyDto) {
+        return ResponseEntity.ok(commentService.replyComment(id, replyDto));
+    }
+
+    @GetMapping("/comments/{id}/replies")
+    public ResponseEntity<List<CommentDto>> getReplies(
+            @PathVariable String id,
+            @RequestParam(name = "email", required = false) String email) {
+        return ResponseEntity.ok(commentService.getReplies(id, email));
+    }
 }

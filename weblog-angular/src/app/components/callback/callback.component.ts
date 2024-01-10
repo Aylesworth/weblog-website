@@ -32,6 +32,20 @@ export class CallbackComponent implements OnInit {
 
           this.authService.setAuthInfo(email, accessToken, expiresIn);
 
+          this.authService.getUserInfo(accessToken).subscribe(
+            data => {
+              console.log(data);
+              this.authService.saveUser({
+                id: data.id,
+                email: data.email,
+                name: data.name,
+                pictureUrl: data.picture
+              }).subscribe(
+                response => console.log(response)
+              );
+            }
+          );
+
           this.router.navigateByUrl('/home');
         }
       );
