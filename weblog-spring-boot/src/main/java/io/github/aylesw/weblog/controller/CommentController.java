@@ -2,6 +2,7 @@ package io.github.aylesw.weblog.controller;
 
 import io.github.aylesw.weblog.dto.CommentDto;
 import io.github.aylesw.weblog.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class CommentController {
     }
 
     @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<CommentDto> addComment(@PathVariable String postId, @RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> addComment(@PathVariable String postId, @Valid @RequestBody CommentDto commentDto) {
         return ResponseEntity.ok(commentService.addComment(postId, commentDto));
     }
 
@@ -38,7 +39,7 @@ public class CommentController {
     }
 
     @PostMapping("/comments/{id}/replies")
-    public ResponseEntity<CommentDto> replyComment(@PathVariable String id, @RequestBody CommentDto replyDto) {
+    public ResponseEntity<CommentDto> replyComment(@PathVariable String id, @Valid @RequestBody CommentDto replyDto) {
         return ResponseEntity.ok(commentService.replyComment(id, replyDto));
     }
 

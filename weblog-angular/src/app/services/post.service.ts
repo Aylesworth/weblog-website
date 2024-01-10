@@ -19,19 +19,26 @@ export class PostService {
   }
 
   getPosts(): Observable<Post[]> {
-    return this.httpClient.get<Post[]>(this.postUrl).pipe(
-      map((response: any) => {
-        for (let element of response) {
-          console.log(element);
-          element.created = new Date(element.created);
-          element.updated = new Date(element.updated);
-        }
-        return response;
-      })
-    );
+    return this.httpClient.get<Post[]>(this.postUrl);
   }
 
   getPost(id: string): Observable<Post> {
     return this.httpClient.get<Post>(`${this.postUrl}/${id}`);
+  }
+
+  updatePost(id: string, post: Post): Observable<any> {
+    return this.httpClient.put<Post>(`${this.postUrl}/${id}`, post);
+  }
+
+  deletePost(id: string): Observable<any> {
+    return this.httpClient.delete<Post>(`${this.postUrl}/${id}`);
+  }
+
+  searchForPosts(keyword: string): Observable<Post[]> {
+    return this.httpClient.get<Post[]>(`${this.postUrl}?search=${keyword}`);
+  }
+
+  getPostsByAuthor(email: string): Observable<Post[]> {
+    return this.httpClient.get<Post[]>(`${this.postUrl}?email=${email}`);
   }
 }

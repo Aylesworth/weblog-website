@@ -15,7 +15,14 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDto>> getPosts() {
+    public ResponseEntity<List<PostDto>> getPosts(
+            @RequestParam(name = "search", required = false) String keyword,
+            @RequestParam(name = "email", required = false) String email) {
+        if (keyword != null)
+            return ResponseEntity.ok(postService.searchForPosts(keyword));
+        if (email != null)
+            return ResponseEntity.ok(postService.getPostsByAuthor(email));
+
         return ResponseEntity.ok(postService.getPosts());
     }
 
@@ -27,5 +34,15 @@ public class PostController {
     @PostMapping("/posts")
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
         return ResponseEntity.ok(postService.createPost(postDto));
+    }
+
+    @PutMapping("/posts/{id}")
+    public ResponseEntity<PostDto> updatePost(@PathVariable String id, @Valid @RequestBody PostDto postDto) {
+        return ResponseEntity.ok(postService.updatePost(id, postDto));
+    }
+
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity<PostDto> deletePost(@PathVariable String id) {
+        return ResponseEntity.ok(postService.deletePost(id));
     }
 }

@@ -144,8 +144,13 @@ public class CommentServiceImpl implements CommentService {
 
         Comment comment = commentRepository.findById(commentId)
                         .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
-        commentRepository.delete(comment);
 
+        if (!comment.getReplies().isEmpty()) {
+            comment.getReplies().forEach(commentRepository::delete);
+        }
+
+        commentRepository.delete(comment);
+        
         return mapToDto(comment);
     }
 

@@ -2,9 +2,9 @@
 <h1 class="my-4">Welcome to {{ appName }}</h1>
 
 <!-- "Create New Post" button -->
-<button class="btn btn-primary btn-dark custom-btn" routerLink="/new-post">Create New Post</button>
+<button class="btn btn-primary btn-dark custom-btn" (click)="createNewPost()">Create New Post</button>
 
-<h2 class="mb-4">Latest Posts</h2>
+<h2 class="mb-4" [innerHTML]="label"></h2>
 
 <!-- Blog Posts -->
 <div class="row" *ngFor="let post of posts">
@@ -24,7 +24,7 @@
                 <a routerLink="/post/{{ post.id }}" class="btn btn-primary btn-sm btn-dark custom-btn mb-4">Read More</a>
               </div>
             <div class="card-footer text-muted mt-0 mb-0 px-1 py-2">
-                <small>{{ post.created | date }} by <a href="#">{{ post.authorDetails?.name ?? post.author }}</a></small>
+                <small>{{ post.created | date }} by <a href="/home?email={{ post.author }}">{{ post.authorDetails?.name ?? post.author }}</a></small>
             </div>
           </div>
         </div>

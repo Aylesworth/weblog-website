@@ -13,6 +13,7 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { CookieService } from 'ngx-cookie-service';
+import { EditPostComponent } from './components/edit-post/edit-post.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CookieService } from 'ngx-cookie-service';
     PostComponent,
     CommentSectionComponent,
     NavBarComponent,
-    CallbackComponent
+    CallbackComponent,
+    EditPostComponent
   ],
   imports: [
     BrowserModule,

@@ -30,7 +30,7 @@
   }
 
   /* Custom style for the login button */
-  .navbar .navbar-nav .nav-item .login-btn {
+  .navbar .navbar-nav .nav-item .nav-btn {
       color: #fff; /* Text color */
       background-color: #343a40; /* Dark background color */
       border: 1px solid #fff; /* Border style */
@@ -39,8 +39,8 @@
   }
 
   /* Hover effect for the login button */
-  .navbar .navbar-nav .nav-item .login-btn:hover,
-  .navbar .navbar-nav .nav-item .login-btn:focus {
+  .navbar .navbar-nav .nav-item .nav-btn:hover,
+  .navbar .navbar-nav .nav-item .nav-btn:focus {
       color: #343a40; /* Change text color on hover to match background color */
       background-color: #fff; /* Change background color on hover */
       border-color: #fff; /* Change border color on hover */
@@ -87,8 +87,6 @@
   }
 
   .comment-body {
-    /* border: 1px solid #ddd; */
-    /* padding: 15px; */
     border-radius: 5px;
     background-color: #fff;
   }
@@ -138,7 +136,7 @@
     height: 50px;
   }
 
-  .btn-remove {
+  .btn-icon {
     border: 0;
     background-color: #fff;
   }

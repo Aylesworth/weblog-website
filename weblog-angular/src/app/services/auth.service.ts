@@ -10,11 +10,11 @@ import { User } from '../common/user';
 })
 export class AuthService {
 
-  loggedIn!: BehaviorSubject<boolean>;
+  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient, private cookieService: CookieService) {
     const email: string = this.cookieService.get('session_id');
-    this.loggedIn = new BehaviorSubject<boolean>(email !== '');
+    this.loggedIn.next(email !== '');
   }
 
   getAccessToken(code: string): Observable<any> {
@@ -60,7 +60,6 @@ export class AuthService {
   logout() {
     this.cookieService.delete('session_id');
     this.cookieService.delete('access_token');
-
     this.loggedIn.next(false);
   }
 }

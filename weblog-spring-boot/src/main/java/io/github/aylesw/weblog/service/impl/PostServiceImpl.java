@@ -1,11 +1,11 @@
 package io.github.aylesw.weblog.service.impl;
 
-import io.github.aylesw.weblog.dto.CommentDto;
 import io.github.aylesw.weblog.dto.PostDto;
 import io.github.aylesw.weblog.dto.UserDto;
 import io.github.aylesw.weblog.entity.Post;
 import io.github.aylesw.weblog.entity.User;
 import io.github.aylesw.weblog.exception.ResourceNotFoundException;
+import io.github.aylesw.weblog.repository.CommentRepository;
 import io.github.aylesw.weblog.repository.PostRepository;
 import io.github.aylesw.weblog.repository.UserRepository;
 import io.github.aylesw.weblog.service.PostService;
@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final ModelMapper mapper;
 
@@ -56,15 +56,59 @@ public class PostServiceImpl implements PostService {
     public PostDto getPost(String id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
-        PostDto postDto = mapToDto(post);
-//        postDto.setContent(adjustImages(post.getContent()));
-        return postDto;
+        return mapToDto(post);
+    }
+
+    @Override
+    public PostDto updatePost(String id, PostDto postDto) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
+        post.setUpdated(new Date());
+        post = postRepository.save(post);
+        return mapToDto(post);
+    }
+
+    @Override
+    public PostDto deletePost(String id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        post.getComments().forEach(comment -> {
+            comment.getReplies().forEach(commentRepository::delete);
+            commentRepository.delete(comment);
+        });
+        postRepository.delete(post);
+        return mapToDto(post);
+    }
+
+    @Override
+    public List<PostDto> searchForPosts(String keyword) {
+        List<Post> posts = postRepository.findByTitleOrContentContaining(keyword);
+        posts = posts.stream().filter(post ->
+                post.getTitle().toLowerCase().contains(keyword.toLowerCase())
+                        || Jsoup.parse(post.getContent()).text().toLowerCase().contains(keyword.toLowerCase())
+        ).toList();
+        return posts.stream().map(post -> {
+            PostDto postDto = mapToDto(post);
+            postDto.setContent(getContentShort(post.getContent()));
+            return postDto;
+        }).toList();
+    }
+
+    @Override
+    public List<PostDto> getPostsByAuthor(String email) {
+        List<Post> posts = postRepository.findByAuthorOrderByCreatedDesc(email);
+        return posts.stream().map(post -> {
+            PostDto postDto = mapToDto(post);
+            postDto.setContent(getContentShort(post.getContent()));
+            return postDto;
+        }).toList();
     }
 
     private PostDto mapToDto(Post post) {
         PostDto postDto = mapper.map(post, PostDto.class);
-        if (post.getAuthorDetails() != null)
-            postDto.setAuthorDetails(mapper.map(post.getAuthorDetails(), UserDto.class));
+        postDto.setAuthorDetails(mapper.map(post.getAuthorDetails(), UserDto.class));
         postDto.setThumbnail(getThumbnail(post.getContent()));
         return postDto;
     }
@@ -87,15 +131,5 @@ public class PostServiceImpl implements PostService {
             return firstImage.outerHtml();
         }
         return null;
-    }
-
-    private String adjustImages(String content) {
-        Document doc = Jsoup.parse(content);
-        Elements images = doc.select("img");
-        images.forEach(image -> {
-            image.attr("width", "100%")
-                    .attr("height", "auto");
-        });
-        return doc.html();
     }
 }

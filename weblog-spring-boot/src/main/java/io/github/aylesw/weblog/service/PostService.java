@@ -8,4 +8,8 @@ public interface PostService {
     PostDto createPost(PostDto postDto);
     List<PostDto> getPosts();
     PostDto getPost(String id);
+    PostDto updatePost(String id, PostDto postDto);
+    PostDto deletePost(String id);
+    List<PostDto> searchForPosts(String keyword);
+    List<PostDto> getPostsByAuthor(String email);
 }

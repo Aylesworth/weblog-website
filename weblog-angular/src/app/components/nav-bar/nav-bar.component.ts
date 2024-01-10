@@ -12,8 +12,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavBarComponent implements OnInit {
   appName: string = appConfig.appName;
   authUrl: string = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${appConfig.clientId}&redirect_uri=${appConfig.redirectUri}&scope=${appConfig.scopes.join('%20')}&approval_prompt=force`;
-  loggedIn: boolean = false;
+  loggedIn!: boolean;
   name: string = '';
+  searchInput: string = '';
 
   constructor(
     private authService: AuthService,
@@ -32,9 +33,16 @@ export class NavBarComponent implements OnInit {
       }
     );
   }
+  
+  search() {
+    this.router.navigateByUrl(`/home?search=${this.searchInput.trim()}`);
+  }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate(['/home']);
+    const isConfirmed = window.confirm('Are you sure you want to log out?');
+    if (isConfirmed) {
+      this.authService.logout();
+      window.location.reload();
+    }
   }
 }
