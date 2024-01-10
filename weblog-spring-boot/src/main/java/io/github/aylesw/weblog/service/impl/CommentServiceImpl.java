@@ -126,6 +126,29 @@ public class CommentServiceImpl implements CommentService {
                 }).toList();
     }
 
+    @Override
+    public CommentDto deleteComment(String commentId) {
+        Post post = postRepository.findByCommentsId(commentId);
+        if (post != null) {
+            var comments = post.getComments().stream().filter(comment -> !comment.getId().equals(commentId)).toList();
+            post.setComments(comments);
+            postRepository.save(post);
+        }
+
+        Comment parent = commentRepository.findByRepliesId(commentId);
+        if (parent != null) {
+            var replies = parent.getReplies().stream().filter(reply -> !reply.getId().equals(commentId)).toList();
+            parent.setReplies(replies);
+            commentRepository.save(parent);
+        }
+
+        Comment comment = commentRepository.findById(commentId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
+        commentRepository.delete(comment);
+
+        return mapToDto(comment);
+    }
+
     private CommentDto mapToDto(Comment comment) {
         return CommentDto.builder()
                 .id(comment.getId())

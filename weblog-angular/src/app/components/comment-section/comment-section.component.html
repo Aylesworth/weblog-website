@@ -27,7 +27,10 @@
           <div class="media-body comment-content">
             <div class="comment-user">
               <b>{{ comment.user?.name }}</b>
-              <small class="ml-2">{{ comment.posted | date:'medium' }}</small>
+              <small class="ml-2">{{ comment.posted | date:'MMM d, y, hh:mm' }}</small>
+              <button class="btn-remove btn-sm ml-3" *ngIf="email === post.author || email === comment.email" (click)="deleteComment(comment.id!)">
+                <i class="fas fa-trash"></i>
+              </button>
             </div>
             <div class="comment-text mt-1">
               <pre>{{ comment.content }}</pre>
@@ -46,7 +49,10 @@
                     <div class="media-body comment-content">
                       <div class="comment-user">
                         <b>{{ reply.user?.name }}</b> 
-                        <small class="ml-2">{{ reply.posted | date:'medium' }}</small>
+                        <small class="ml-2">{{ reply.posted | date:'MMM d, y, hh:mm' }}</small>
+                        <button class="btn-remove btn-sm ml-3" *ngIf="email === post.author || email === reply.email" (click)="deleteReply(comment, reply.id!)">
+                          <i class="fas fa-trash"></i>
+                        </button>
                       </div>
                       <div class="comment-text mt-1">
                         <pre>{{ reply.content }}</pre>

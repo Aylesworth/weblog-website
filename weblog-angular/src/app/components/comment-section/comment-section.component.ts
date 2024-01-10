@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Comment } from 'src/app/common/comment';
+import { Post } from 'src/app/common/post';
 import { User } from 'src/app/common/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommentService } from 'src/app/services/comment.service';
@@ -11,7 +12,7 @@ import { CommentService } from 'src/app/services/comment.service';
   styleUrls: ['./comment-section.component.css']
 })
 export class CommentSectionComponent implements OnInit {
-  @Input() postId!: string;
+  @Input() post!: Post;
 
   comments: Comment[] = [];
   repliesHidden: boolean[] = [];
@@ -31,7 +32,7 @@ export class CommentSectionComponent implements OnInit {
   }
 
   fetchComments() {
-    this.commentService.getComments(this.postId, this.email).subscribe(
+    this.commentService.getComments(this.post.id!, this.email).subscribe(
       data => {
         console.log(data);
         this.comments = data;
@@ -58,7 +59,7 @@ export class CommentSectionComponent implements OnInit {
 
     console.log(comment);
 
-    this.commentService.addComment(this.postId, comment).subscribe(
+    this.commentService.addComment(this.post.id!, comment).subscribe(
       response => {
         console.log(response);
         this.fetchComments();
@@ -104,5 +105,29 @@ export class CommentSectionComponent implements OnInit {
       }
     )
     replyForm.controls['reply'].setValue('');
+  }
+
+  deleteComment(commentId: string) {
+    const isConfirmed = window.confirm('Are you sure you want to delete this comment?');
+    if (isConfirmed) {      
+      this.commentService.deleteComment(commentId).subscribe(
+        response => {
+          console.log(response);
+          this.fetchComments();
+        }
+      )
+    }
+  }
+
+  deleteReply(comment: Comment, replyId: string) {
+    const isConfirmed = window.confirm('Are you sure you want to delete this comment?');
+    if (isConfirmed) {      
+      this.commentService.deleteComment(replyId).subscribe(
+        response => {
+          console.log(response);
+          this.fetchReplies(comment);
+        }
+      )
+    }
   }
 }

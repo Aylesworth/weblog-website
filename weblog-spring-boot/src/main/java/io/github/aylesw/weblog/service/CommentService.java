@@ -11,4 +11,5 @@ public interface CommentService {
     Integer unlikeComment(String commentId, String email);
     CommentDto replyComment(String commentId, CommentDto replyDto);
     List<CommentDto> getReplies(String commentId, String email);
+    CommentDto deleteComment(String commentId);
 }

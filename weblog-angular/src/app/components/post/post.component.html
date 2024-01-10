@@ -5,10 +5,10 @@
         <!-- <img class="card-img-top" src="http://placehold.it/978x180" alt="Post Image"> -->
         <div class="card-body">
             <h2 class="card-title">{{ post.title }}</h2>
-            <p class="card-text text-muted"><small>{{ post.created | date:'medium' }} by <a href="#"><em>{{ post.author }}</em></a></small></p>
+            <p class="card-text text-muted"><small>{{ post.created | date:'MMM d, y, hh:mm' }} by <a href="#">{{ post.author }}</a></small></p>
             <p class="card-text mt-4" [innerHTML]="post.content"></p>
         </div>
     </div>
 
-    <app-comment-section [postId]="post.id!"></app-comment-section>
+    <app-comment-section [post]="post"></app-comment-section>
 </div>

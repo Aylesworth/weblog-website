@@ -48,4 +48,9 @@ public class CommentController {
             @RequestParam(name = "email", required = false) String email) {
         return ResponseEntity.ok(commentService.getReplies(id, email));
     }
+
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<CommentDto> deleteComment(@PathVariable String id) {
+        return ResponseEntity.ok(commentService.deleteComment(id));
+    }
 }

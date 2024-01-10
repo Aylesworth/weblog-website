@@ -61,4 +61,9 @@ export class CommentService {
       })
     );
   }
+
+  deleteComment(commentId: string): Observable<any> {
+    const url: string = `${this.commentUrl}/${commentId}`;
+    return this.httpClient.delete<any>(url);
+  }
 }
