@@ -32,7 +32,7 @@
               <p>{{ comment.content }}</p>
             </div>
             <div class="comment-actions">
-              <button class="btn-like">
+              <button class="btn-like" [ngClass]="{'liked': liked[i]}" (click)="toggleLike(i)">
                 <i class="fas fa-thumbs-up"></i> Like ({{ comment.likes }})
               </button>
               <button class="btn-reply" (click)="toggleReplies(i)">

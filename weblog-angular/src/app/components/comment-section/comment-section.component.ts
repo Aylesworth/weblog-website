@@ -14,21 +14,23 @@ export class CommentSectionComponent implements OnInit {
   @ViewChild('commentForm') commentForm!: NgForm;
 
   comments: Comment[] = [];
+  liked: boolean[] = [];
   repliesHidden: boolean[] = [];
   email: string = '';
 
   constructor(private commentService: CommentService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.fetchComments();
     this.email = this.authService.getEmail();
+    this.fetchComments();
   }
 
   fetchComments() {
-    this.commentService.getComments(this.postId).subscribe(
+    this.commentService.getComments(this.postId, this.email).subscribe(
       data => {
         console.log(data);
         this.comments = data;
+        this.liked = this.comments.map(comment => comment.liked!);
         this.repliesHidden = new Array(this.comments.length).fill(true);
       }
     );
@@ -53,5 +55,23 @@ export class CommentSectionComponent implements OnInit {
 
   toggleReplies(index: number) {
     this.repliesHidden[index] = !this.repliesHidden[index];
+  }
+
+  toggleLike(index: number) {
+    this.liked[index] = !this.liked[index];
+    const comment = this.comments[index];
+
+    if (this.liked[index]) {
+      this.commentService.likeComment(comment.id!, this.email).subscribe(
+        newLikes => comment.likes = newLikes
+      );
+    } else {
+      this.commentService.unlikeComment(comment.id!, this.email).subscribe(
+        newLikes => comment.likes = newLikes
+      );
+    }
+  }
+
+  like(comment: Comment) {
   }
 }

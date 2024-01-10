@@ -9,12 +9,13 @@ import { Comment } from '../common/comment';
 })
 export class CommentService {
 
-  postUrl: string = `${appConfig.apiUrl}/posts`
+  postUrl: string = `${appConfig.apiUrl}/posts`;
+  commentUrl: string = `${appConfig.apiUrl}/comments`;
 
   constructor(private httpClient: HttpClient) { }
 
-  getComments(postId: string): Observable<Comment[]> {
-    const url: string = `${this.postUrl}/${postId}/comments`;
+  getComments(postId: string, email: string): Observable<Comment[]> {
+    const url: string = `${this.postUrl}/${postId}/comments?email=${email}`;
     return this.httpClient.get<Comment[]>(url).pipe(
       map((response: any) => {
           for (let element of response) {
@@ -27,7 +28,20 @@ export class CommentService {
 
   addComment(postId: string, comment: Comment): Observable<any> {
     const url: string = `${this.postUrl}/${postId}/comments`;
-    console.log("Post: " + url);
     return this.httpClient.post<any>(url, comment);
+  }
+
+  likeComment(commentId: string, email: string): Observable<number> {
+    const url: string = `${this.commentUrl}/${commentId}/like`;
+    return this.httpClient.post<number>(url, {
+      email: email
+    });
+  }
+
+  unlikeComment(commentId: string, email: string): Observable<number> {
+    const url: string = `${this.commentUrl}/${commentId}/unlike`;
+    return this.httpClient.post<number>(url, {
+      email: email
+    });
   }
 }

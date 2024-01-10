@@ -4,5 +4,6 @@ export class Comment {
     public content?: string;
     public posted?: Date;
     public likes?: number;
+    public liked?: boolean;
     public replies?: Comment[];
 }

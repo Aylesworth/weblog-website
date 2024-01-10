@@ -19,5 +19,6 @@ public class CommentDto {
     private String content;
     private Date posted;
     private Integer likes;
+    private Boolean liked;
     private List<CommentDto> replies;
 }

@@ -8,7 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,10 +27,15 @@ public class Comment {
 
     private Date posted;
 
-    private Integer likes;
+    private List<String> likedEmails;
 
     @DBRef
     private List<Comment> replies;
+
+    public List<String> getLikedEmails() {
+        if (likedEmails == null) likedEmails = new ArrayList<>();
+        return likedEmails;
+    }
 
     public List<Comment> getReplies() {
         if (replies == null) replies = new ArrayList<>();

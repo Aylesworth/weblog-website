@@ -7,7 +7,7 @@ public class BlogApiException extends RuntimeException {
     private HttpStatus status;
     private String message;
 
-    public BlogApiException(HttpStatus status, String message) {
+    public BlogApiException(String message, HttpStatus status) {
         this.status = status;
         this.message = message;
     }
