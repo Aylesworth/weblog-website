@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/posts")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
-    @GetMapping("")
+    @GetMapping("/posts")
     public ResponseEntity<List<PostDto>> getPosts() {
         return ResponseEntity.ok(postService.getPosts());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/posts/{id}")
     public ResponseEntity<PostDto> getPost(@PathVariable String id) {
         return ResponseEntity.ok(postService.getPost(id));
     }
 
-    @PostMapping("")
+    @PostMapping("/posts")
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
         return ResponseEntity.ok(postService.createPost(postDto));
     }

@@ -2,7 +2,7 @@
 <h1 class="my-4">Welcome to {{ appName }}</h1>
 
 <!-- "Create New Post" button -->
-<button class="btn btn-primary btn-dark new-post-btn" routerLink="/new-post">Create New Post</button>
+<button class="btn btn-primary btn-dark custom-btn" routerLink="/new-post">Create New Post</button>
 
 <h2 class="mb-4">Latest Posts</h2>
 
@@ -21,7 +21,7 @@
             </h4>
             <p class="card-text">{{ post.content }}</p>
             <div class="clearfix">
-                <a routerLink="/post/{{ post.id }}" class="btn btn-primary btn-sm btn-dark mb-4">Read More</a>
+                <a routerLink="/post/{{ post.id }}" class="btn btn-primary btn-sm btn-dark custom-btn mb-4">Read More</a>
               </div>
             <div class="card-footer text-muted mt-0 mb-0 px-1 py-2">
                 <small>{{ post.created | date }} by <a href="#"><em>{{ post.author }}</em></a></small>

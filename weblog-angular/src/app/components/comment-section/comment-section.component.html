@@ -1,1 +1,86 @@
-<p>comment-section works!</p>
+
+    <!-- Comment Section -->
+    <div class="card px-4 py-3">
+        <h4 class="mb-4">Comment Section</h4>
+
+    <!-- Add Comment Form -->
+      <div class="comment">
+        <div class="media comment-body">
+          <img class="d-flex mr-3 user-avatar" src="http://placehold.it/50x50" alt="User Avatar">
+          <div class="media-body comment-content">
+            <div class="comment-text">
+                <form #commentForm="ngForm" (ngSubmit)="submitComment()">
+                    <div class="form-group">
+                      <textarea id="comment" name="comment" class="form-control" rows="3" placeholder="Write a comment" ngModel required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Submit Comment</button>
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comment 1 -->
+      <div class="comment" *ngFor="let comment of comments; let i = index">
+        <div class="media comment-body">
+          <img class="d-flex mr-3 user-avatar" src="http://placehold.it/50x50" alt="User Avatar">
+          <div class="media-body comment-content">
+            <div class="comment-user">
+              <b>{{ comment.email }}</b>
+            </div>
+            <div class="comment-text mt-1">
+              <p>{{ comment.content }}</p>
+            </div>
+            <div class="comment-actions">
+              <button class="btn-like">
+                <i class="fas fa-thumbs-up"></i> Like ({{ comment.likes }})
+              </button>
+              <button class="btn-reply" (click)="toggleReplies(i)">
+                <i class="fas fa-reply"></i> Reply
+              </button>
+              <small>Jan 6, 2024 at 10:04 AM</small>
+              <div class="comment-replies mt-4" [ngClass]="{'d-none': repliesHidden[i]}">
+                <div class="reply-form mt-3">
+                  <div class="media comment-body">
+                    <img class="d-flex mr-3 user-avatar" src="http://placehold.it/50x50" alt="User Avatar">
+                    <div class="media-body comment-content">
+                      <div class="comment-user">
+                        <b>John Doe</b>
+                      </div>
+                      <div class="comment-text">
+                        <p>Comment content goes here.</p>
+                      </div>
+                      <div class="comment-actions">
+                        <button class="btn-like" onclick="toggleLike(this.parentNode)">
+                          <i class="fas fa-thumbs-up"></i> Like
+                        </button>
+                        <small>Jan 6, 2024 at 10:04 AM</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="reply-form mt-3">
+                  <div class="media comment-body pl-0">
+                    <img class="d-flex mr-3 user-avatar" src="http://placehold.it/50x50" alt="User Avatar">
+                    <div class="media-body comment-content">
+                      <div class="comment-text">
+                          <form>
+                              <div class="form-group">
+                                <textarea class="form-control" rows="2" placeholder="Write a comment"></textarea>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Submit Comment</button>
+                            </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add more comments as needed -->
+      
+
+    </div>

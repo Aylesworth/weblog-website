@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -11,7 +10,6 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CallbackComponent implements OnInit {
   constructor(
     private authService: AuthService, 
-    private cookieService: CookieService, 
     private route: ActivatedRoute,
     private router: Router) {}
 
@@ -32,10 +30,7 @@ export class CallbackComponent implements OnInit {
 
           const email: string = decodedId.email;
 
-          this.cookieService.set('session_id', email, expiresIn, '/');
-          this.cookieService.set('access_token', accessToken, expiresIn, '/');
-
-          this.authService.login();
+          this.authService.setAuthInfo(email, accessToken, expiresIn);
 
           this.router.navigateByUrl('/home');
         }

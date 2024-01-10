@@ -17,7 +17,6 @@ export class NavBarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private cookieService: CookieService,
     private router: Router) {}
 
   ngOnInit(): void {
@@ -25,19 +24,15 @@ export class NavBarComponent implements OnInit {
       value => {
         this.loggedIn = value;
         if (value) 
-          this.email = this.cookieService.get('session_id');
+          this.email = this.authService.getEmail();
       }
     );
 
-    this.email = this.cookieService.get('session_id');
-    if (this.email === '') this.authService.logout();
-    else this.authService.login();
+    this.email = this.authService.getEmail();
   }
 
-  logout(): void {
-    this.cookieService.delete('session_id');
-    this.cookieService.delete('access_token');
+  logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/home');
+    this.router.navigate(['/home']);
   }
 }

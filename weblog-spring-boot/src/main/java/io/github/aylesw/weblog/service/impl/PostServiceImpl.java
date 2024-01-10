@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,7 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
         PostDto postDto = mapToDto(post);
         postDto.setThumbnail(getThumbnail(post.getContent()));
+        postDto.setContent(adjustImages(post.getContent()));
         return postDto;
     }
 
@@ -58,8 +60,8 @@ public class PostServiceImpl implements PostService {
     private String getContentShort(String content) {
         Document doc = Jsoup.parse(content);
         String contentShort = doc.text();
-        if (contentShort.length() > 100)
-            contentShort = contentShort.substring(0, 100) + "...";
+        if (contentShort.length() > 400)
+            contentShort = contentShort.substring(0, 400) + "...";
         return contentShort;
     }
 
@@ -73,5 +75,15 @@ public class PostServiceImpl implements PostService {
             return firstImage.outerHtml();
         }
         return null;
+    }
+
+    private String adjustImages(String content) {
+        Document doc = Jsoup.parse(content);
+        Elements images = doc.select("img");
+        images.forEach(image -> {
+            image.attr("width", "100%")
+                    .attr("height", "auto");
+        });
+        return doc.html();
     }
 }
