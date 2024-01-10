@@ -2,9 +2,12 @@ package io.github.aylesw.weblog.service.impl;
 
 import io.github.aylesw.weblog.dto.CommentDto;
 import io.github.aylesw.weblog.dto.PostDto;
+import io.github.aylesw.weblog.dto.UserDto;
 import io.github.aylesw.weblog.entity.Post;
+import io.github.aylesw.weblog.entity.User;
 import io.github.aylesw.weblog.exception.ResourceNotFoundException;
 import io.github.aylesw.weblog.repository.PostRepository;
+import io.github.aylesw.weblog.repository.UserRepository;
 import io.github.aylesw.weblog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
@@ -14,6 +17,7 @@ import org.jsoup.select.Elements;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,14 +25,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
     private final ModelMapper mapper;
 
     @Override
     public PostDto createPost(PostDto postDto) {
-        postDto.setId(null);
-        postDto.setCreated(new Date());
-        postDto.setUpdated(postDto.getCreated());
-        Post post = postRepository.save(mapper.map(postDto, Post.class));
+        User user = userRepository.findByEmail(postDto.getAuthor())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "email", postDto.getAuthor()));
+        Post post = mapper.map(postDto, Post.class);
+        post.setId(null);
+        post.setAuthorDetails(user);
+        post.setCreated(new Date());
+        post.setUpdated(null);
+        post.setComments(new ArrayList<>());
+        post = postRepository.save(post);
         return mapToDto(post);
     }
 
@@ -38,7 +48,6 @@ public class PostServiceImpl implements PostService {
         return posts.stream().map(post -> {
             PostDto postDto = mapToDto(post);
             postDto.setContent(getContentShort(post.getContent()));
-            postDto.setThumbnail(getThumbnail(post.getContent()));
             return postDto;
         }).toList();
     }
@@ -48,13 +57,16 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
         PostDto postDto = mapToDto(post);
-        postDto.setThumbnail(getThumbnail(post.getContent()));
-        postDto.setContent(adjustImages(post.getContent()));
+//        postDto.setContent(adjustImages(post.getContent()));
         return postDto;
     }
 
     private PostDto mapToDto(Post post) {
-        return mapper.map(post, PostDto.class);
+        PostDto postDto = mapper.map(post, PostDto.class);
+        if (post.getAuthorDetails() != null)
+            postDto.setAuthorDetails(mapper.map(post.getAuthorDetails(), UserDto.class));
+        postDto.setThumbnail(getThumbnail(post.getContent()));
+        return postDto;
     }
 
     private String getContentShort(String content) {

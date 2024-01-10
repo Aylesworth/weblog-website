@@ -46,9 +46,10 @@ export class NewPostComponent implements OnInit {
     console.log(post);
 
     this.postService.createPost(post).subscribe(
-      data => console.log(data)
+      data => {
+        console.log(data);  
+        this.router.navigateByUrl('/home');
+      }
     );
-
-    this.router.navigateByUrl('/home');
   }
 }

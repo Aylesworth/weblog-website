@@ -27,6 +27,9 @@ public class Post {
 
     private String author;
 
+    @DBRef
+    private User authorDetails;
+
     private Date created;
 
     private Date updated;

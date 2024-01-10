@@ -1,12 +1,12 @@
 <!-- Blog Post -->
-<div *ngIf="post">
+<div *ngIf="post" class="post">
     <div class="card mb-4 mb-5">
         <div class="img-wrapper" *ngIf="post.thumbnail" [innerHTML]="post.thumbnail"></div>
         <!-- <img class="card-img-top" src="http://placehold.it/978x180" alt="Post Image"> -->
         <div class="card-body">
             <h2 class="card-title">{{ post.title }}</h2>
-            <p class="card-text text-muted"><small>{{ post.created | date:'MMM d, y, hh:mm' }} by <a href="#">{{ post.author }}</a></small></p>
-            <p class="card-text mt-4" [innerHTML]="post.content"></p>
+            <p class="card-text text-muted"><small>{{ post.created | date:'MMM d, y, HH:mm' }} by <a href="#">{{ post.authorDetails?.name ?? post.author }}</a></small></p>
+            <div class="card-text mt-4 post-content" [innerHTML]="post.content"></div>
         </div>
     </div>
 

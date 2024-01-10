@@ -1,5 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
-app-root {
+  /* You can add global styles to this file, and also import other style files */
+  app-root {
     padding-top: 60px; /* Adjust based on your navbar height */
     min-height: 100vh;
     display: flex;
@@ -71,6 +71,10 @@ app-root {
     width: 100%;
     height: 240px;
     overflow: hidden;
+  }
+
+  .post .post-content {
+    overflow: auto;
   }
 
   .comment-section {

@@ -20,6 +20,10 @@
         </div>
       </div>
 
+      <div *ngIf="!self" class="mb-4">
+        <h6>Please <a href="{{ authUrl }}">login</a> to comment on this post.</h6>
+      </div>
+
       <!-- Comment 1 -->
       <div class="comment" *ngFor="let comment of comments; let i = index">
         <div class="media comment-body">
@@ -27,7 +31,7 @@
           <div class="media-body comment-content">
             <div class="comment-user">
               <b>{{ comment.user?.name }}</b>
-              <small class="ml-2">{{ comment.posted | date:'MMM d, y, hh:mm' }}</small>
+              <small class="ml-2">{{ comment.posted | date:'MMM d, y, HH:mm' }}</small>
               <button class="btn-remove btn-sm ml-3" *ngIf="email === post.author || email === comment.email" (click)="deleteComment(comment.id!)">
                 <i class="fas fa-trash"></i>
               </button>
@@ -49,7 +53,7 @@
                     <div class="media-body comment-content">
                       <div class="comment-user">
                         <b>{{ reply.user?.name }}</b> 
-                        <small class="ml-2">{{ reply.posted | date:'MMM d, y, hh:mm' }}</small>
+                        <small class="ml-2">{{ reply.posted | date:'MMM d, y, HH:mm' }}</small>
                         <button class="btn-remove btn-sm ml-3" *ngIf="email === post.author || email === reply.email" (click)="deleteReply(comment, reply.id!)">
                           <i class="fas fa-trash"></i>
                         </button>

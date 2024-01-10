@@ -26,6 +26,8 @@ public class PostDto {
     @NotEmpty
     private String author;
 
+    private UserDto authorDetails;
+
     private String thumbnail;
 
     private Date created;

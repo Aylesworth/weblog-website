@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Comment } from 'src/app/common/comment';
 import { Post } from 'src/app/common/post';
 import { User } from 'src/app/common/user';
+import appConfig from 'src/app/config/app-config';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommentService } from 'src/app/services/comment.service';
 
@@ -18,6 +19,7 @@ export class CommentSectionComponent implements OnInit {
   repliesHidden: boolean[] = [];
   email: string = '';
   self?: User;
+  authUrl: string = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${appConfig.clientId}&redirect_uri=${appConfig.redirectUri}&scope=${appConfig.scopes.join('%20')}&approval_prompt=force`;
 
   constructor(private commentService: CommentService, private authService: AuthService) {}
 
@@ -79,6 +81,11 @@ export class CommentSectionComponent implements OnInit {
   }
 
   toggleLike(comment: Comment) {
+    if (!this.self) {
+      window.alert("Please login to like and comment.");
+      return;
+    }
+
     comment.liked = !comment.liked;
 
     if (comment.liked) {
