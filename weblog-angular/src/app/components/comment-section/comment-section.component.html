@@ -6,7 +6,7 @@
     <!-- Add Comment Form -->
       <div *ngIf="self" class="comment">
         <div class="media comment-body">
-          <img class="d-flex mr-3 user-avatar" src="{{ self.pictureUrl }}" alt="User Avatar">
+          <img class="d-flex mr-3 user-avatar mt-1" src="{{ self.pictureUrl }}" alt="User Avatar">
           <div class="media-body comment-content">
             <div class="comment-text">
                 <form #commentForm="ngForm" (ngSubmit)="submitComment(commentForm)">
@@ -24,10 +24,10 @@
         <h6>Please <a href="{{ authUrl }}">login</a> to comment on this post.</h6>
       </div>
 
-      <!-- Comment 1 -->
+      <!-- Comment -->
       <div class="comment" *ngFor="let comment of comments; let i = index">
         <div class="media comment-body">
-          <img class="d-flex mr-3 user-avatar" src="{{ comment.user?.pictureUrl }}" alt="User Avatar">
+          <img class="d-flex mr-3 user-avatar mt-1" src="{{ comment.user?.pictureUrl }}" alt="User Avatar">
           <div class="media-body comment-content">
             <div class="comment-user">
               <b>{{ comment.user?.name }}</b>
@@ -49,7 +49,7 @@
               <div class="comment-replies mt-4" [ngClass]="{'d-none': repliesHidden[i]}">
                 <div class="reply-form mt-3" *ngFor="let reply of comment.replies">
                   <div class="media comment-body">
-                    <img class="d-flex mr-3 user-avatar" src="{{ reply.user?.pictureUrl }}" alt="User Avatar">
+                    <img class="d-flex mr-3 user-avatar mt-1" src="{{ reply.user?.pictureUrl }}" alt="User Avatar">
                     <div class="media-body comment-content">
                       <div class="comment-user">
                         <b>{{ reply.user?.name }}</b> 
@@ -72,14 +72,14 @@
                 
                 <div *ngIf="self" class="reply-form mt-4">
                   <div class="media comment-body pl-0">
-                    <img class="d-flex mr-3 user-avatar" src="{{ self.pictureUrl }}" alt="User Avatar">
+                    <img class="d-flex mr-3 user-avatar mt-1" src="{{ self.pictureUrl }}" alt="User Avatar">
                     <div class="media-body comment-content">
                       <div class="comment-text">
                           <form #replyForm="ngForm" (ngSubmit)="submitReply(comment, replyForm)">
                               <div class="form-group">
-                                <textarea name="reply" class="form-control" rows="2" placeholder="Write a comment" ngModel required></textarea>
+                                <textarea name="reply" class="form-control" rows="2" placeholder="Write a reply" ngModel required></textarea>
                               </div>
-                              <button type="submit" class="btn btn-primary" [disabled]="replyForm.invalid || !replyForm.controls['reply'] || replyForm.controls['reply'].value.trim() === ''">Submit Comment</button>
+                              <button type="submit" class="btn btn-primary" [disabled]="replyForm.invalid || !replyForm.controls['reply'] || replyForm.controls['reply'].value.trim() === ''">Submit Reply</button>
                             </form>
                       </div>
                     </div>
@@ -90,7 +90,6 @@
           </div>
         </div>
       </div>
-      <!-- Add more comments as needed -->
       
 
     </div>

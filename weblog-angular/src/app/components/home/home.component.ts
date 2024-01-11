@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     private postService: PostService, 
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router) {}
+    public router: Router) {}
 
   ngOnInit(): void {
     this.email = this.authService.getEmail();
@@ -71,5 +71,9 @@ export class HomeComponent implements OnInit {
     }
 
     this.router.navigateByUrl('/new-post');
+  }
+
+  viewPost(postId: string) {
+    this.router.navigateByUrl(`/post/${postId}`);
   }
 }

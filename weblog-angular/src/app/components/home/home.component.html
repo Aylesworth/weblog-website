@@ -1,5 +1,5 @@
 <!-- Page Heading -->
-<h1 class="my-4">Welcome to {{ appName }}</h1>
+<h1 class="my-4">Welcome to {{ appName }}!</h1>
 
 <!-- "Create New Post" button -->
 <button class="btn btn-primary btn-dark custom-btn" (click)="createNewPost()">Create New Post</button>
@@ -11,9 +11,9 @@
 
     <div class="col-lg-12 col-sm-12 mb-4">
         <div class="card h-100">
-          <div class="img-wrapper" *ngIf="post.thumbnail; else elseBlock" [innerHTML]="post.thumbnail"></div>
+          <div class="img-wrapper" *ngIf="post.thumbnail; else elseBlock" [innerHTML]="post.thumbnail" (click)="viewPost(post.id!)" style="cursor: pointer;"></div>
           <ng-template #elseBlock>
-            <img class="card-img-top" src="http://placehold.it/978x240" alt="">
+            <img class="card-img-top" src="http://placehold.it/978x240" alt="" (click)="viewPost(post.id!)" style="cursor: pointer;">
           </ng-template>
           <div class="card-body">
             <h4 class="card-title">
