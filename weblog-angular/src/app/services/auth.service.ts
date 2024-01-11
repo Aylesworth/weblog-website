@@ -43,8 +43,8 @@ export class AuthService {
     const expires: Date = new Date();
     expires.setSeconds(expires.getSeconds() + expiresIn);
 
-    this.cookieService.set('session_id', email, expires);
-    this.cookieService.set('access_token', accessToken, expires);
+    this.cookieService.set('session_id', email, expires, '/');
+    this.cookieService.set('access_token', accessToken, expires, '/');
 
     this.loggedIn.next(true);
   }
@@ -58,8 +58,8 @@ export class AuthService {
   }
 
   logout() {
-    this.cookieService.delete('session_id');
-    this.cookieService.delete('access_token');
+    this.cookieService.delete('session_id', '/');
+    this.cookieService.delete('access_token', '/');
     this.loggedIn.next(false);
   }
 }
